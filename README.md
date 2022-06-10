@@ -26,6 +26,10 @@ database.py file will be this module. test.json will be an empty json file with 
 
 To create a database, you can use this:
 ```py
+import sys
+import os
+sys.path.append(os.path.abspath('tools'))
+
 import database
 
 # "database/test.json" is the location of the json file, but you can just type the route of the actual json. If it doesn't exist, it will throw an error.
@@ -36,9 +40,11 @@ Now, let's take use of it!
 ```py
 # In this case we will set some data.
 import database
+
 test = database.create('database/test.json')
 test.set('hello', 'world')
-print(test.get('hello'))
+
+print(test.get('hello')) # world
 ```
 
 In test.json file, you will see something like this:
@@ -47,9 +53,6 @@ In test.json file, you will see something like this:
     "hello": "world"
 }
 ``` 
-And in the console, you will see this:
-
-```world```
 
 Very easy, right? There are more methods and properties you can use.
 

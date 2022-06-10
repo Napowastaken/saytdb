@@ -34,7 +34,7 @@ class create():
         self.content = json.load(file)
         file.close()
 
-    def set(self, key: str, value: any) -> NoReturn:
+    def set(self, key: str, value) -> NoReturn:
         """Set a key to a specific value in the database or create one if it doesn't exist.
         
         Parameters
@@ -46,14 +46,12 @@ class create():
             The value of the key.
         -----------
         """
-        if not isinstance(key, str):
-            print(f'Key name type must be str, got {type(key)}')
-            return
+        if not isinstance(key, str): raise TypeError('Set key name must be a string.')
         self.load()
         self.content[key] = value
         self.save()
     
-    def append(self, key: str, value: any) -> NoReturn:
+    def append(self, key: str, value) -> NoReturn:
         """Append an item to a list or create one if it doesn't exist or it's from a different type.
 
         Parameters
@@ -62,12 +60,10 @@ class create():
             The name of the key to append.
 
         value: :class:`any`
-            The item of the key.
+            The item to append.
         -----------
         """
-        if not isinstance(key, str):
-            print(f'Key name type must be str, got {type(key)}')
-            return
+        if not isinstance(key, str): raise TypeError('Append key name must be a string.')
         try:
             if self.has(key) and isinstance(self.get(key), list):
                 self.content[key].append(value)
@@ -83,21 +79,15 @@ class create():
         Parameters
         -----------
         key: :class:`str`
-            The name of the key to pop.
+            The name of the key.
 
         index: :class:`int`
             Index of the item to remove.
         -----------
         """
-        if not isinstance(key, str):
-            print(f'Key name type must be str, got {type(key)}')
-            return
-        if not isinstance(index, int):
-            print(f'Index must be int, got {type(index)}')
-            return
-        if not isinstance(self.get(key), list):
-            print(f'Key value must be list, got {type(self.get(key))}')
-            return
+        if not isinstance(key, str): raise TypeError('Pop key name type must be a string.')
+        if not isinstance(self.get(key), list): raise TypeError('Pop key value must be a list.')
+        if not isinstance(index, int): raise TypeError('Pop index must be an int.')
         self.content[key].pop(index)
         self.save()
     
@@ -136,9 +126,7 @@ class create():
             The name of the key to delete.
         -----------
         """
-        if not isinstance(key, str):
-            print(f'Key name type must be str, got {type(key)}')
-            return
+        if not isinstance(key, str): raise TypeError('Delete key name must be a string.')
         try:
             self.load()
             del self.content[key]
